@@ -1,8 +1,5 @@
 <template>
-  <h2 v-if="loading > 0">
-    Loading...
-  </h2>
-  <div v-else>
+  <div>
     <div v-for="author in allAuthors" :key="author.id">
       <div class='author'>
         <div class='info-header'>
@@ -36,14 +33,11 @@
 
   export default {
     name: 'AboutPage',
-    data: () => ({
-      loading: 0
-    }),
     apollo: {
-      $loadingKey: 'loading',
       allAuthors: {
-        query: allAuthors
-      }
+        query: allAuthors,
+        prefetch: true
+      },
     }
   }
 </script>

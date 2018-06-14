@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section v-if="allPosts">
+    <section>
       <ul>
         <li v-for="post in allPosts" :key="post.id">
           <router-link :to="`/post/${post.slug}`" class='link'>
@@ -15,12 +15,9 @@
         </li>
       </ul>
       <button v-if="postCount && postCount > allPosts.length" @click="loadMorePosts">
-        {{loading ? 'Loading...' : 'Show more'}}
+        Show more
       </button>
     </section>
-    <h2 v-else>
-      Loading...
-    </h2>
   </div>
 </template>
 
@@ -45,17 +42,14 @@
 
   export default {
     name: 'HomePage',
-    data: () => ({
-      loading: 0
-    }),
     apollo: {
-      $loadingKey: 'loading',
       allPosts: {
         query: allPosts,
         variables: {
           skip: 0,
           first: POSTS_PER_PAGE
-        }
+        },
+        prefetch: true
       },
       postCount: {
         query: gql`{ _allPostsMeta { count } }`,

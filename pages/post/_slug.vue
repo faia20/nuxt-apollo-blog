@@ -1,8 +1,5 @@
 <template>
-  <h2 v-if="loading > 0">
-    Loading...
-  </h2>
-  <div v-else>
+  <div>
     <article>
       <h1>{{post.title}}</h1>
       <div class='placeholder'>
@@ -37,18 +34,15 @@
 
   export default {
     name: 'PostPage',
-    data: () => ({
-      loading: 0
-    }),
     apollo: {
-      $loadingKey: 'loading',
       post: {
         query: post,
         variables () {
           return {
             slug: this.$route.params.slug
           }
-        }
+        },
+        prefetch: true
       }
     },
     components: { VueMarkdown }
